@@ -14,15 +14,22 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
   
-  Product.create({
+  req.user.createProduct({
     title: title,
     price: price,
     imageUrl: imageUrl,
     description: description
   })
+  // Product.create({
+  //   title: title,
+  //   price: price,
+  //   imageUrl: imageUrl,
+  //   description: description,
+  //   userId: req.user.id
+  // })
   .then( result => {
-    console.log('Producto nuevo agregado:', title)
-    return res.redirect('/')
+    console.log('Producto nuevo agregado EXITOSAMENTE:', title)
+    res.redirect('/')
   })
   .catch( err => {
     console.log(err)
@@ -74,15 +81,8 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  // Product.fetchAll(products => {
-  //   res.render('admin/products', {
-  //     prods: products,
-  //     pageTitle: 'Admin Products',
-  //     path: '/admin/products'
-  //   });
-  // });
-
-  Product.findAll()
+  req.user
+  .getProducts()
   .then((products) => {
       res.render('admin/products', {
         prods: products,
