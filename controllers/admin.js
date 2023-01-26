@@ -79,6 +79,8 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+  //.select('title price -_id')
+  //.populate('userId', 'name')
   Product.find()
     .then((products) => {
       res.render("admin/products", {
